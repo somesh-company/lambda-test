@@ -41,12 +41,6 @@ Resources:
             Action: sts:AssumeRole
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
-      Tags:            
-        - Key: VA-ApplicationId
-          Value: essmdatalake
-        - Key: VA-projectId
-          Value: github-aws
-
 Outputs:
   LambdaFunctionName:
     Description: Name of the Lambda function
