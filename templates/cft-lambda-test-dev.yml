@@ -12,12 +12,6 @@ Resources:
         S3Key: layer.zip # Path to your layer's zip file in S3
       CompatibleRuntimes:
         - python3.13
-      Tags:            
-        - Key: VA-ApplicationId
-          Value: essmdatalake
-        - Key: VA-projectId
-          Value: github-aws
-
   MyLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
