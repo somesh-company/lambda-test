@@ -6,7 +6,7 @@ Resources:
   MyLambdaLayer:
     Type: AWS::Lambda::LayerVersion
     Properties:
-      LayerName: testgithubaws
+      LayerName: githubaws
       Content:
         S3Bucket: lambda-layers3969 # Reference to your S3 bucket
         S3Key: layer.zip # Path to your layer's zip file in S3
@@ -15,7 +15,7 @@ Resources:
   MyLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
-      FunctionName: testgithubaws
+      FunctionName: githubaws
       Handler: api-function.lambda_handler
       Runtime: python3.13
       Code:
