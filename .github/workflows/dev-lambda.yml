@@ -49,7 +49,7 @@ jobs:
       - name: Deploy to Dev AWS Account
         run: |
             aws s3 cp layer.zip s3://lambda-layers3969/
-            aws s3 cp api-lambda-test.py.zip s3:///
+            aws s3 cp api-lambda-test.py.zip s3://lambda-layers3969/
       - name: Deploy CloudFormation Stack
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
