@@ -1,0 +1,61 @@
+name: Deploy to AWS Environments 
+
+on:
+  push:
+    branches:
+      - main # Trigger on pushes to the main branch
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout 
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    environment: Development # Associate with a 'Development' environment in GitHub to AWS Dev account
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13' # Specify your desired Python version
+      
+      - name: Zip Lamda function
+        run: |
+         pwd
+         zip -r api-lambda-test.py.zip .
+         pwd
+      
+      - name: Package Lambda Layers and copy to s3
+        run: |
+          pwd
+          mkdir -p python/lib/python3.13/site-packages
+          pip install -r requirements.txt -t python/lib/python3.13/site-packages
+          zip -r layer.zip python/ 
+          pwd
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+           name: zip-files
+           path: |
+             layer.zip
+             api-lambda-test.py.zip
+
+      - name: Configure AWS credentials for Dev
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEV_ROLE_ARN }}
+          aws-region: us-east-1 # Replace with your desired region
+
+      - name: Deploy to Dev AWS Account
+        run: |
+            aws s3 cp layer.zip s3://essm-datalake-s3-nonprod/
+            aws s3 cp api-lambda-test.py.zip s3://essm-datalake-s3-nonprod/
+      - name: Deploy CloudFormation Stack
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: githubaws
+          template: templates/cft-lambda-test-dev.yml
+          capabilities: CAPABILITY_IAM # Required for IAM role creation
+          tags: |
+            VA-ApplicationId= essmdatalake
+            VA-ProjectId= github-aws
