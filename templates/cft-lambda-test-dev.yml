@@ -15,7 +15,7 @@ Resources:
   MyLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
-      FunctionName: githubaws-test
+      FunctionName: githubaws
       Handler: api-function.lambda_handler
       Runtime: python3.13
       Code:
