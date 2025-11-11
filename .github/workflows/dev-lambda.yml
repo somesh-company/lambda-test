@@ -48,8 +48,8 @@ jobs:
 
       - name: Deploy to Dev AWS Account
         run: |
-            aws s3 cp layer.zip s3://essm-datalake-s3-nonprod/
-            aws s3 cp api-lambda-test.py.zip s3://essm-datalake-s3-nonprod/
+            aws s3 cp layer.zip s3://lambda-layers3969/
+            aws s3 cp api-lambda-test.py.zip s3://lambda-layers3969/
       - name: Deploy CloudFormation Stack
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
@@ -57,5 +57,4 @@ jobs:
           template: templates/cft-lambda-test-dev.yml
           capabilities: CAPABILITY_IAM # Required for IAM role creation
           tags: |
-            VA-ApplicationId= essmdatalake
-            VA-ProjectId= github-aws
+           [ { "Key": "VA-ApplicationId", "Value": "essmdatalake" },{"Key": "VA-ProjectId", "Value": "github-aws"} ]
