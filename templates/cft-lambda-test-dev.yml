@@ -33,6 +33,8 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       RoleName: Testlambdarole
+      PermissionsBoundary:
+         arn:aws:iam::167114836033:policy/PB-Standard
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
