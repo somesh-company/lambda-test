@@ -55,8 +55,6 @@ jobs:
         with:
           name: githubaws
           template: templates/cft-lambda-test-dev.yml
-          capabilities: |
-            CAPABILITY_IAM # Required for IAM role creation
-            CAPABILITY_NAMED_IAM
+          capabilities: CACAPABILITY_NAMED_IAM # Required for IAM role creation
           tags: |
            [ { "Key": "VA-ApplicationId", "Value": "essmdatalake" },{"Key": "VA-ProjectId", "Value": "github-aws"} ]
