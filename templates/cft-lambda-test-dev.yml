@@ -32,7 +32,7 @@ Resources:
   LambdaExecutionRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: Testlambdarole-1
+      RoleName: Testlambdarole-09
       PermissionsBoundary:
          arn:aws:iam::167114836033:policy/PB-Standard
       AssumeRolePolicyDocument:
